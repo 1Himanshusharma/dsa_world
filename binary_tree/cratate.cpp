@@ -1,4 +1,5 @@
 #include<iostream>
+#include<queue>
 using namespace std;
 
 
@@ -62,6 +63,26 @@ void inorder(Node *root){
   inorder(root->r_child);
 }
 
+// level order
+void levelorder(Node *root){
+  queue<Node*> q;
+  q.push(root);
+
+  while (!q.empty()){
+    Node *front = q.front();
+    cout << front->data << " ";
+    if (front->l_child){
+      q.push(front->l_child);
+    }
+    if (front->r_child){
+      q.push(front->r_child);
+    }
+    q.pop();
+  }
+  
+
+}
+
 int main(){
   Node *root = create();
   cout << "The preorder traversal: ";
@@ -72,4 +93,7 @@ int main(){
   cout << endl;
   cout << "The inorder traversal: ";
   inorder(root);
+  cout << endl;
+  cout << "The level order traversal: ";
+  levelorder(root);
 }
