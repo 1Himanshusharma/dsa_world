@@ -82,6 +82,32 @@ void levelorder(Node *root){
   
 
 }
+void breathwise(Node *root){
+  queue<Node*> q;
+  q.push(root);
+  q.push(NULL);
+  while (q.size()>0){
+    Node *front = q.front();
+    q.pop();
+    
+    if (front == NULL){
+      cout << endl;
+      if (!q.empty()) {
+        q.push(NULL); // push NULL only if there are more nodes
+      }
+    }
+    else{
+      cout << front->data << " ";
+      if (front->l_child != NULL){
+        q.push(front->l_child);
+      }
+      if (front->r_child != NULL){
+        q.push(front->r_child);
+      }
+    }
+    
+  }
+}
 
 int main(){
   Node *root = create();
@@ -96,4 +122,8 @@ int main(){
   cout << endl;
   cout << "The level order traversal: ";
   levelorder(root);
+  cout << endl;
+  cout << "breath wise: ";
+  breathwise(root);
+  
 }
