@@ -1,4 +1,5 @@
 #include<iostream>
+#include<vector>
 using namespace std;
 
 // dekho change kya ho rha hai = index;
@@ -41,6 +42,7 @@ int main(){
   cout << "Plese enter the size of arr: ";
   cin >> n;
   int arr[n];
+  vector<int> val;
   for (int i=0;i<n;i++){
     cin >> arr[i];
   }
@@ -53,4 +55,10 @@ int main(){
   else{
     cout << "false";
   }
+  cout << "\nIndexes at which element is present are : \n";
+  findindex(arr,0,n,key,val);
+  for (auto i : val) {
+    cout << i<<" ";
+    }
+
 }
