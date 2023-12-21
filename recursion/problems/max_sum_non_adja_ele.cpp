@@ -19,8 +19,8 @@ void solve(vector<int> arr,int index,int size,vector<int>& val){
     solve(arr,i,size,val);
   }
 
-
-  cout << "max: "<< *max_element(val.begin(),val.end());
+  int m = *max_element(val.begin(),val.end());
+  cout << "max: "<< m;
 }
 
 
@@ -44,5 +44,6 @@ int main(){
   vector<int> val;
   // hume ek hi ans chaiye tho return type must be int type
   solve(arr,0,n,val);
+
   
 }
