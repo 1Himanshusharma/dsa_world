@@ -1,5 +1,4 @@
-#include<iostream>
-using namespace std;
+
 // this is very very very infinate very famous problems 
 // fun fact 
 // this problem was not any solution until recursion was not introduced
@@ -15,7 +14,7 @@ using namespace std;
 
 // C++ recursive function to 
 // solve tower of hanoi puzzle 
-#include <bits/stdc++.h> 
+#include<iostream> 
 using namespace std; 
 
 void towerOfHanoi(int n, char from_rod, char to_rod, 
