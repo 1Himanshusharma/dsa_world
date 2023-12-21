@@ -1,4 +1,5 @@
 #include<iostream>
+#include<string>
 using namespace std;
 
 // ye bhi easy question koi explaination nahi hogi
@@ -22,7 +23,7 @@ void reverse(string& str,int start,int end){
   if (start >= end){
     return;
   }
-  swap(str[start] = str[end]);
+  swap(str[start], str[end]);
   reverse(str,start+1,end-1);
   // dont you think that use void recursion ki easy to understand
 }
