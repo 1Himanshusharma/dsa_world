@@ -14,9 +14,9 @@ int solve(vector<int>& arr,int target){
   int mini = INT_MAX;
   
   for (int i=0;i<arr.size();i++){
-    int ans = solve(arr,target - arr[i]);
+    int ans = solve(arr,target - arr[i]) + 1;
     if (ans != INT_MAX){
-      mini = min(mini,ans + 1);
+      mini = min(mini,ans);
     }
   }
   return mini;
