@@ -1,52 +1,70 @@
 #include<iostream>
-using namespace std;
 #include<vector>
-bool issafe(int x,int y,int row,int col,vector<vector<int>> arr,vector<vector<bool>>& visited){
-  if ((x >= 0 && x < row) && (y >=0 && y < col) && arr[x][y] == 1 && visited[x][y] == false){
-    return true;
-  }
-  return false;
-}
-void solve(int i,int j,int row,int col,vector<vector<int>> arr,vector<vector<bool>>& visited,vector<string>& path,string output){
-  // base condition
-  if (i == row - 1 && j == col - 1){
-    path.push_back(output);
-    return;
-  }
-  // for top
-  if (issafe(i-1,j,row,col,arr,visited) == true){
-    visited[i-1][j] = true;
-    solve(i-1,j,row,col,arr,visited,path,output + "T");
-    visited[i-1][j] = false;
-  }
-  // for down
-  if (issafe(i+1,j,row,col,arr,visited) == true){
-    visited[i+1][j] = true;
-    solve(i+1,j,row,col,arr,visited,path,output+"D");
-    visited[i+1][j] = false;
-  }
-  // for left
-  if (issafe(i,j+1,row,col,arr,visited) == true){
-    visited[i][j+1] = true;
-    solve(i,j+1,row,col,arr,visited,path,output + "R");
-    visited[i][j+1] = false;
-  }
-  // for right
-  if (issafe(i,j-1,row,col,arr,visited) == true){
-    visited[i][j-1] = true;
-    solve(i,j-1,row,col,arr,visited,path,output + "L");
-    visited[i][j-1] = false;
-  }
-}
-int main(){
-  vector<vector<int>> arr = {{1,1,0},{1,0,1},{1,1,1}};
-  int n = arr.size();
-  vector<string> paths;
-  vector<vector<bool>> visited(n , vector<bool>(n ,false));
-  string output ="";
-  solve(0,0,n,n,arr,visited,paths,output);
-  cout << "All possible paths are : \n";
-  for (auto i: paths){
-    cout << i << "\n";
+using namespace std;
+
+// Today we are going to solve a very famous problem: Rat in a Maze.
+
+// Safe place find karo
+bool issafe(vector<vector<int>>& arr, int x, int y, int row, int col, vector<vector<bool>>& visited) {
+    // Safe place
+    // If I am in a room, I can go anywhere.
+    // But outside is not safe.
+    if ((x >= 0 && x < row) && (y >= 0 && y < col) && (arr[x][y] == 1) && (!visited[x][y])) {
+        return true;
     }
+    return false;
+}
+
+// What parameters should I pass?
+// Store karne ke liye vector
+void solve(vector<vector<int>>& arr, int x, int y, int row, int col, vector<vector<bool>>& visited, vector<string>& result, string path) {
+    // Base case
+    // Simple hai, agar main destination per pahunch gaya to
+    if ((x == row - 1) && (y == col - 1)) {  // Fix: Adjust the base case condition
+        result.push_back(path);
+        return;
+    }
+    // Ab main ek baar maximum wale case ko consider karunga jisse mujhe all possibilities ka pata lagega
+    // For up
+    if (issafe(arr, x - 1, y, row, col, visited)) {
+        visited[x - 1][y] = true;
+        solve(arr, x - 1, y, row, col, visited, result, path+'U');
+        // Backtrace is like when we want to find out all cases
+        visited[x - 1][y] = false;
+    }
+    // For down
+    if (issafe(arr, x + 1, y, row, col, visited)) {
+        visited[x + 1][y] = true;
+        solve(arr, x + 1, y, row, col, visited, result, path +'D');
+        visited[x + 1][y] = false;
+    }
+    // For left
+    if (issafe(arr, x, y - 1, row, col, visited)) {
+        visited[x][y - 1] = true;
+        solve(arr, x, y - 1, row, col, visited, result, path + 'L');
+        visited[x][y - 1] = false;
+    }
+    // For right
+    if (issafe(arr, x, y + 1, row, col, visited)) {
+        visited[x][y + 1] = true;
+        solve(arr, x, y + 1, row, col, visited, result, path + 'R');
+        visited[x][y + 1] = false;
+    }
+}
+
+int main() {
+    // Rat in maze
+    // Create vector
+    // Full vector
+    vector<vector<int>> arr{{1, 0, 1, 0}, {1, 1, 1, 1}, {0, 1, 0, 1}};  // Fix: Added a missing element in the array
+    int n = 3;
+    vector<string> res;
+    string path = "";
+    vector<vector<bool>> visited(3, vector<bool>(4, false));  // Fix: Adjusted the size of the visited array
+    solve(arr, 0, 0, n, 4, visited, res, path);  // Fix: Adjusted the column size
+    cout << "All possible paths : ";
+    for (auto x : res) {
+        cout << x << endl;
+    }
+    return 0;
 }
