@@ -29,7 +29,7 @@ int partition(int arr[],int start,int end){
       i++;
     }
     while (arr[j] > pivot_element){
-      j++;
+      j--;
     }
     if ((i < pivot_index) && (j > pivot_index)){
       swap(arr[i],arr[j]);
