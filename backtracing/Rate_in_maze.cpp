@@ -56,12 +56,13 @@ int main() {
     // Rat in maze
     // Create vector
     // Full vector
-    vector<vector<int>> arr{{1, 0, 1, 0}, {1, 1, 1, 1}, {0, 1, 0, 1}};  // Fix: Added a missing element in the array
-    int n = 3;
+    vector<vector<int>> arr{{1,1},{1,1}};  // Fix: Added a missing element in the array
+    int n = 2;
     vector<string> res;
     string path = "";
-    vector<vector<bool>> visited(3, vector<bool>(4, false));  // Fix: Adjusted the size of the visited array
-    solve(arr, 0, 0, n, 4, visited, res, path);  // Fix: Adjusted the column size
+    vector<vector<bool>> visited(2, vector<bool>(2, false)); 
+    visited[0][0] = true; // Fix: Adjusted the size of the visited array
+    solve(arr, 0, 0, 2, 2, visited, res, path);  // Fix: Adjusted the column size
     cout << "All possible paths : ";
     for (auto x : res) {
         cout << x << endl;
