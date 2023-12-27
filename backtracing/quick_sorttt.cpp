@@ -1,69 +1,64 @@
 #include<iostream>
+#include<vector>
 using namespace std;
 
-int partition(int arr[],int start,int end){
-  // ye koirecursion funcation nahi hai
-  // phele mene mann liya phela element pivot hai
+
+int partition(vector<int>& arr,int start,int end){
+  // this funcation is not recursion
+  // suppose that first element is pivot element
   int pivot_index = start;
   int pivot_element = arr[start];
-
-  // aab humara pivot_element sabko bol rha hai ki mujhe right place per bhejo
-  // mujhe pta hai ki mai mere se chote logo ko count kar lunga
-  // or mai uss place per chala jaunga
+  //find the right position of that element
   int count = 0;
-  for (int i = start + 1;i<end;i++){
-    if (arr[i] > pivot_element){
+  for (int i = start;i < end;i++){
+    if (arr[i] <= pivot_element) {
       count++;
     }
   }
-  int right_index = count + start;
-  swap(arr[pivot_index],arr[right_index]);
-  pivot_index = right_index;
 
-  // aab mai bol rha hu ki jo mere left me mujh se bade hai orr right me chote hai unko swap kro
-  int i = start;
-  int j = end;
+  // i found the right postion
+  int right_position = count + start;
+  swap(arr[right_position],arr[pivot_index]);
+
+  pivot_index = right_position;
+
+  int i=start,j=end;
   while ((i < pivot_index) && (j > pivot_index)){
-    while (pivot_element >= arr[i]){
+    while (arr[i] <= pivot_element){
       i++;
     }
-    while (pivot_element < arr[j]){
+    while (arr[j] > pivot_element){
       j--;
     }
-    if ((i < pivot_index) && (j > pivot_index)){
-      swap(arr[i],arr[j]);
-    }
+    swap(arr[i],arr[j]);
   }
-  return right_index;
-
+  return pivot_index;
 }
 
 
-void mergesort(int *arr,int start,int end){
-  // base condition
-  if (start >= end){
+void quicksort(vector<int>& arr,int start,int end){
+  if (start>=end){
     return;
   }
   int pivot_index = partition(arr,start,end);
-  mergesort(arr,start,pivot_index-1);
-  mergesort(arr,pivot_index+1,end);
-
+  quicksort(arr,start,pivot_index-1);
+  quicksort(arr,pivot_index+1,end);
 }
 
 int main(){
   int n;
-  cout << "Enter size of arr: ";
+  cout << "Enter the size of arr: ";
   cin >> n;
-
-  int arr[n];
-  for (int i = 0;i<n;i++){
-    cin >> arr[i];
+  vector<int> val;
+  while (n >0){
+    int key;
+    cin >> key;
+    val.push_back(key);
+    n--;
   }
-  mergesort(arr,0,n-1);
-  cout << "\nSorted array is : \n";
-  for (int i = 0;i<n;i++){
-    cout << arr[i] << " ";
-    }
-
-
+  int size = val.size();
+  quicksort(val,0,size-1);
+  for(int i = 0;i<size;i++){
+    cout << val[i] << " ";
+  }
 }

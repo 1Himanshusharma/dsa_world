@@ -6,15 +6,16 @@ void permutation(string& str,int i){
     cout << str << " ";
     return;
   }
-  for (int j = i;j<str.length();j++){
+  for (int j = i;j< str.length();j++){
     swap(str[i],str[j]);
     permutation(str,i+1);
-    // undo the change done by swap function
     swap(str[i],str[j]);
   }
 }
 int main(){
   string str;
+  cout << "Enter your word: ";
   cin >> str;
+  int n = str.length();
   permutation(str,0);
 }
