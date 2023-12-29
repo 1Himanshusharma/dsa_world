@@ -110,11 +110,11 @@ void breathwise(Node *root){
 }
 int  height(Node *root){
   if (root == NULL){
-    return 0;
+    return 1;
   }
   int x = height(root->l_child);
   int y = height(root->r_child);
-  return x + y + 1;
+  return x ;
 
 }
  
@@ -136,5 +136,6 @@ int main(){
   cout << endl;
   cout << "breath wise: ";
   breathwise(root);
+  cout<<"height of tree is : "<<height(root)<<endl;
   
 }
