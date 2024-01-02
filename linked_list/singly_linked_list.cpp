@@ -14,7 +14,7 @@ class Node{
     this->next = NULL;
   }
   ~Node(){
-    cout << "Node with value: " << this->data << "deleted" << endl;
+    cout << "Node with value: " << this->data << " deleted " << endl;
   }
 };
 void display(Node *head){
@@ -47,7 +47,7 @@ void insertAtHead(Node* &head,Node* &tail,int data){
     head = new_node;
   }
 }
-void insertAtTail(Node *head,Node* tail,int data){
+void insertAtTail(Node *&head,Node* &tail,int data){
   if (head == NULL){
     head = new Node(data);
     tail = head;
@@ -89,4 +89,66 @@ void insertAtPosition(Node* &head,Node* &tail,int data,int index){
     q->next = new_node;
   }
 }
-void 
+void deleteFromIndex(Node* &head, Node* &tail, int index) {
+  if (head == NULL) {
+    cout << "LL is empty.";
+    return;
+  }
+
+  int len = getlength(head);
+
+  if (index <= 0 || index > len) {
+    cout << "Invalid Index";
+    return;
+  }
+
+  if (index == 1) {
+    Node *temp = head;
+    head = head->next;
+    if (head == NULL) {
+      tail = NULL; // Update tail when the list becomes empty
+    }
+    delete temp;
+  } else {
+    int i = 1;
+    Node *p = head;
+    Node *q = NULL;
+
+    while (i < index) {
+      q = p;
+      p = p->next;
+      i++;
+    }
+
+    q->next = p->next;
+
+    if (q->next == NULL) {
+      tail = q; // Update tail if the last element is deleted
+    }
+
+    delete p;
+  }
+}
+
+int main(){
+  Node *head = NULL;
+  Node *tail = NULL;
+  insertAtHead(head,tail,10);
+  insertAtHead(head,tail,20);
+  insertAtHead(head,tail,10);
+  insertAtHead(head,tail,20);
+  insertAtHead(head,tail,10);
+  insertAtHead(head,tail,20);
+  insertAtHead(head,tail,10);
+  insertAtTail(head,tail,20);
+  insertAtTail(head,tail,10);
+  insertAtTail(head,tail,20);
+  insertAtTail(head,tail,10);
+  insertAtTail(head,tail,20);
+  insertAtTail(head,tail,10);
+  insertAtTail(head,tail,20);
+  insertAtTail(head,tail,10);
+  insertAtTail(head,tail,20);
+  deleteFromIndex(head,tail,3);
+  display(head);
+}
