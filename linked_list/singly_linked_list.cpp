@@ -5,11 +5,11 @@ class Node{
   public:
   int data;
   Node *next;
-  class Node(){
+  Node(){
     this->data = 0;
     this->next = NULL;
   }
-  class Node(int data){
+  Node(int data){
     this->data = data;
     this->next = NULL;
   }
@@ -47,7 +47,7 @@ void insertAtHead(Node* &head,Node* &tail,int data){
     head = new_node;
   }
 }
-Void insertAtTail(Node *head,Node* tail,int data){
+void insertAtTail(Node *head,Node* tail,int data){
   if (head == NULL){
     head = new Node(data);
     tail = head;
@@ -58,3 +58,35 @@ Void insertAtTail(Node *head,Node* tail,int data){
     tail = new_node;
   }
 }
+void insertAtPosition(Node* &head,Node* &tail,int data,int index){
+  //suppose head == NULL
+  if (head == NULL){
+    Node *new_node = new Node(data);
+    head = new_node;
+    tail = head;
+  }
+  else {
+    if (index == 1){
+      insertAtHead(head,tail,data);
+      return;
+    }
+    int len = getlength(head);
+    if (index > len){
+      insertAtTail(head,tail,data);
+      return;
+    }
+    int i = 1;
+    Node *p,*q;
+    p = head;
+    q = NULL;
+    while (index > 1){
+      q = p;
+      p = p->next;
+      index--;
+    }
+    Node *new_node = new Node(data);
+    new_node->next = p->next;
+    q->next = new_node;
+  }
+}
+void 
