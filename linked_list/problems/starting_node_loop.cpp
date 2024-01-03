@@ -110,6 +110,32 @@ bool check_loop(Node* head){
   }
   return false;
 }
+Node* start_node(Node* head){
+  if (head == NULL){
+    return NULL;
+  }
+  if (head->next == NULL){
+    return head;
+  }
+  Node *slow = head;
+  Node *fast = head;
+  while (fast){
+    fast = fast->next;
+    if (fast){
+      fast = fast->next;
+      slow = slow->next;
+    }
+    if (slow == fast){
+      slow = head;
+      break;
+    }
+  }
+  while (fast && slow != fast){
+      slow = slow->next;
+      fast = fast->next;
+    }
+    return slow;
+}
 
 
 int main(){
@@ -117,20 +143,14 @@ int main(){
   Node *tail = NULL;
   insertAtHead(head,tail,10);
   insertAtHead(head,tail,20);
-  insertAtHead(head,tail,10);
-  insertAtHead(head,tail,20);
-  insertAtHead(head,tail,10);
-  insertAtHead(head,tail,20);
-  insertAtHead(head,tail,10);
-  insertAtTail(head,tail,20);
-  insertAtTail(head,tail,10);
-  insertAtTail(head,tail,20);
-  insertAtTail(head,tail,10);
-  insertAtTail(head,tail,20);
-  insertAtTail(head,tail,10);
-  insertAtTail(head,tail,20);
-  insertAtTail(head,tail,10);
-  insertAtTail(head,tail,20);
+  insertAtHead(head,tail,30);
+  insertAtHead(head,tail,40);
+  insertAtHead(head,tail,50);
+  insertAtHead(head,tail,60);
+  insertAtHead(head,tail,70);
+  insertAtTail(head,tail,80);
+  insertAtTail(head,tail,90);
+
   tail->next = head->next->next->next->next;
 
   bool ans = check_loop(head);
@@ -140,4 +160,6 @@ int main(){
   else{
     cout << "loop not founded";
   }
+  Node* temp = start_node(head);
+  cout << "starting node is: " << temp->data;
 }
