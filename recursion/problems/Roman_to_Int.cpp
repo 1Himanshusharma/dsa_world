@@ -26,7 +26,7 @@ string solve(int num) {
     for (auto i : mp) {
         if (num >= i.first) {
             string a = "";
-            if (num >= 10) {
+            if (num >= 100) {
                 a = solve(num / i.first);
             }
             string b = i.second;
