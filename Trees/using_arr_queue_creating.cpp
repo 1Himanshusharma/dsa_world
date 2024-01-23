@@ -10,7 +10,7 @@ class Node{
 class Queue{
   private:
   int size;
-  int **Q;
+  Node **Q;
   int front,rear;
   public:
   public:
@@ -21,7 +21,7 @@ class Queue{
     Q = new Node*[size];
   }
   ~Queue(){
-    delete Q;
+    delete[] Q;
   }
   bool is_full(){
     if (rear == size - 1){
@@ -67,25 +67,28 @@ class Tree{
   Node *root;
   void preorder(Node *p){
     if (p){
-      cout << p->data << " ";
-      preorder(p);
-      preorder(p);
+        cout << p->data << " ";
+        preorder(p->lchild);
+        preorder(p->rchild);
     }
-  }
-  void postorder(Node *p){
+}
+
+void postorder(Node *p){
     if (p){
-      postorder(p);
-      postorder(p);
-      cout << p->data << " ";
+        postorder(p->lchild);
+        postorder(p->rchild);
+        cout << p->data << " ";
     }
-  }
-  void inorder(Node *p){
+}
+
+void inorder(Node *p){
     if (p){
-      inorder(p);
-      cout << p->data << " ";
-      inorder(p);
+        inorder(p->lchild);
+        cout << p->data << " ";
+        inorder(p->rchild);
     }
-  }
+}
+
   int height(Node *p){
     int x,y;
     if (p == NULL){
@@ -110,48 +113,62 @@ class Tree{
     // baki recusion karega
     x = count(p->lchild);
     y = count(p->rchild);
-    return x + y;
+    return x + y + 1;
   }
   public:
   Tree(){
     root = NULL;
-    root->lchild = NULL;
-    root->rchild = NULL;
+
   }
 
-  void create(){
-    int n;
-    cout << "Enter the number of nodes: ";
-    cin >> n;
-    Queue q(n);
-    // creating an array to store node values
-    root = new Node;
-    int root_ele;
-    cout << "Please enter the root element: ";
-    cin >> root_ele;
-    root->data = root_ele;
-    q.enqueue(root);
-    while (!q.is_empty()){
-      Node *temp = q.dequeue();
-      cout << "Please enter the lchild of " << temp->data;
-      int key;
-      cin >> key;
-      if (key != -1){
-        Node *new_node = new Node;
-        new_node->lchild = new_node->rchild = NULL;
-        temp->lchild = new_node;
-        q.enqueue(new_node);
-      }
-      cout << "\nPlease enter the rchild of "<< temp->data;
-      cin >> key;
-      if (key != -1){
-        Node *new_node = new Node;
-        new_node->lchild = new_node->rchild = NULL;
-        temp->rchild = new_node;
-        q.enqueue(new_node);
-      }
+   void create() {
+        int n;
+        cout << "Enter the number of nodes: ";
+        cin >> n;
+
+        if (n <= 0) {
+            cout << "Invalid number of nodes." << endl;
+            return;
+        }
+
+        Queue q(n);
+
+        // creating an array to store node values
+        root = new Node;
+        int root_ele;
+        cout << "Please enter the root element: ";
+        cin >> root_ele;
+        root->data = root_ele;
+        root->lchild = nullptr;
+        root->rchild = nullptr;
+        q.enqueue(root);
+
+        while (!q.is_empty()) {
+            Node *temp = q.dequeue();
+            cout << "Please enter the lchild of " << temp->data << ": ";
+            int key;
+            cin >> key;
+            if (key != -1) {
+                Node *new_node = new Node;
+                new_node->data = key;
+                new_node->lchild = nullptr;
+                new_node->rchild = nullptr;
+                temp->lchild = new_node;
+                q.enqueue(new_node);
+            }
+
+            cout << "Please enter the rchild of " << temp->data << ": ";
+            cin >> key;
+            if (key != -1) {
+                Node *new_node = new Node;
+                new_node->data = key;
+                new_node->lchild = nullptr;
+                new_node->rchild = nullptr;
+                temp->rchild = new_node;
+                q.enqueue(new_node);
+            }
+        }
     }
-  }
   // ALL the traversals
   // i know that ki all traversals ke liye mujhe recursion ki help chaiye hogi
   void preorder(){
@@ -170,6 +187,18 @@ class Tree{
   int count(){
     return count(root);
   }
+};
 
+int main(){
+  Tree t;
+  t.create();
+  cout << "Preorder Traversal: ";
+  t.preorder();
+  cout << endl << "Inorder Traversal: ";
+  t.inorder();
+  cout << endl << "Postorder Traversal: ";
+  t.postorder();
+  cout << endl << "Height of tree is :" << t.height() ;
+  cout << endl << "Number of nodes are :" << t.count();
 
 }
