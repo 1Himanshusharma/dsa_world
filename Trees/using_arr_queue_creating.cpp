@@ -1,10 +1,16 @@
 #include<iostream>
 using namespace std;
 
+class Node{
+  public:
+  int data;
+  Node *lchild;
+  Node *rchild;
+};
 class Queue{
   private:
   int size;
-  int *Q;
+  int **Q;
   int front,rear;
   public:
   public:
@@ -12,7 +18,7 @@ class Queue{
     this->size = size;
     front = -1;
     rear = -1;
-    Q = new int[size];
+    Q = new Node*[size];
   }
   ~Queue(){
     delete Q;
@@ -29,17 +35,17 @@ class Queue{
     }
     return false;
   }
-  void enqueue(int key){
+  void enqueue(Node *p){
     if (is_full()){
       cout << "Queue is full.";
     }
     else{
       rear++;
-      Q[rear] = key;
+      Q[rear] = p;
     }
   }
-  int dequeue(){
-    int temp = 0;
+  Node *dequeue(){
+    Node *temp = 0;
     if (is_empty()){
       cout << "Queue is empty.";
     }
@@ -52,4 +58,118 @@ class Queue{
 };
 
 
-// now i am gonna create
+// now i am gonna create a tree using queue 
+//
+
+
+class Tree{
+  private:
+  Node *root;
+  void preorder(Node *p){
+    if (p){
+      cout << p->data << " ";
+      preorder(p);
+      preorder(p);
+    }
+  }
+  void postorder(Node *p){
+    if (p){
+      postorder(p);
+      postorder(p);
+      cout << p->data << " ";
+    }
+  }
+  void inorder(Node *p){
+    if (p){
+      inorder(p);
+      cout << p->data << " ";
+      inorder(p);
+    }
+  }
+  int height(Node *p){
+    int x,y;
+    if (p == NULL){
+      return 0;
+    }
+    // mai bol rha hu mujhe left me height chaiye
+    x = height(p->lchild);
+    y = height(p->rchild);
+    if ( x > y ) {
+      return (x + 1);
+    }
+    else{
+      return (y + 1);
+    }
+  }
+  int count(Node * p){
+    int x,y;
+    if ( p == NULL){
+      return 0;
+    }
+    //yyar mai buus ek hi case sollve karunga
+    // baki recusion karega
+    x = count(p->lchild);
+    y = count(p->rchild);
+    return x + y;
+  }
+  public:
+  Tree(){
+    root = NULL;
+    root->lchild = NULL;
+    root->rchild = NULL;
+  }
+
+  void create(){
+    int n;
+    cout << "Enter the number of nodes: ";
+    cin >> n;
+    Queue q(n);
+    // creating an array to store node values
+    root = new Node;
+    int root_ele;
+    cout << "Please enter the root element: ";
+    cin >> root_ele;
+    root->data = root_ele;
+    q.enqueue(root);
+    while (!q.is_empty()){
+      Node *temp = q.dequeue();
+      cout << "Please enter the lchild of " << temp->data;
+      int key;
+      cin >> key;
+      if (key != -1){
+        Node *new_node = new Node;
+        new_node->lchild = new_node->rchild = NULL;
+        temp->lchild = new_node;
+        q.enqueue(new_node);
+      }
+      cout << "\nPlease enter the rchild of "<< temp->data;
+      cin >> key;
+      if (key != -1){
+        Node *new_node = new Node;
+        new_node->lchild = new_node->rchild = NULL;
+        temp->rchild = new_node;
+        q.enqueue(new_node);
+      }
+    }
+  }
+  // ALL the traversals
+  // i know that ki all traversals ke liye mujhe recursion ki help chaiye hogi
+  void preorder(){
+    preorder(root);
+  }
+  void inorder(){
+    inorder(root);
+  }
+  void postorder(){
+    postorder(root);
+  }
+
+  int height(){
+    return height(root);
+  }
+  int count(){
+    return count(root);
+  }
+
+
+}
