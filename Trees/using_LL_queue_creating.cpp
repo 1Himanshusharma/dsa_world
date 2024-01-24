@@ -100,10 +100,45 @@ class Tree{
       int key;
       cout << "Enter the left child of the " << temp->data << ": ";
       cin >> key;
+      if (key != -1){
+        Node *new_node = new Node;
+        new_node->data = key;
+        new_node->lchild = NULL;
+        new_node->rchild = NULL;
+        temp->lchild = new_node;
+        q.enqueue(new_node);
+      }
+      cout << "Enter the right child of the "<< temp->data << ": ";
+      cin >> key;
+      if (key != -1){
+        Node *new_node = new Node;
+        new_node->data = key;
+        new_node->lchild = NULL;
+        new_node->rchild = NULL;
+        temp->rchild = new_node;
+        q.enqueue(new_node);
+      }
     }
-    
-
   }
+  void preorder(){
+    preorder(root);
+  }
+  void inorder(){
+    inorder(root);
+  }
+  void postorder(){
+    postorder(root);
+  }
+  int height(){
+    return height(root);
+  }
+  int count(){
+    return count(root);
+  }
+  int leaf_node(){
+    return leaf_node(root);
+  }
+  
 }
 
 
