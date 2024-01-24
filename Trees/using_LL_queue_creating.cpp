@@ -5,7 +5,7 @@ class Node{
   int data;
   Node* lchild;
   Node* rchild;
-}
+};
 class L_Node{
   public:
   Node* data;
@@ -81,6 +81,53 @@ class Queue{
 class Tree{
   private:
   Node *root;
+  void preorder(Node *p){
+    if (p){
+      cout << p->data << " ";
+      preorder(p->lchild);
+      preorder(p->rchild);
+    }
+  }
+  void inorder(Node *p){
+    if (p){
+      inorder(p->lchild);
+      cout << p->data << " ";
+      inorder(p->rchild);
+    }
+  }
+  void postorder(Node *p){
+    if (p){
+      postorder(p->lchild);
+      postorder(p->rchild);
+      cout << p->data << " ";
+    }
+  }
+  int height(Node *p){
+    int x,y;
+    if (p == NULL)return 0;
+    x=height(p->lchild);
+    y=height(p->rchild);
+    return (x>y)?(x+1):(y+1);
+  }
+  int count(Node *p){
+    if (p == NULL){
+      return 0;
+    }
+    return count(p->lchild) + count(p->rchild) + 1;
+  }
+  int leaf_count(Node *p){
+    int x,y;
+    if ((p->lchild == NULL) && (p->rchild == NULL)){
+      return 1;
+    }
+    if (p == NULL){
+      return 0;
+    }
+    x = leaf_count(p->lchild);
+    y = leaf_count(p->rchild);
+    
+    return x + y;
+  }
   public:
   Tree(){
     root = NULL;
@@ -136,23 +183,25 @@ class Tree{
     return count(root);
   }
   int leaf_node(){
-    return leaf_node(root);
+    return leaf_count(root);
   }
-  
-}
+
+};
 
 
 int main(){
   cout << "Enter your element \n To stop press -1: ";
-  Queue q;
-  while (true){
-    int key;
-    cin >> key;
-    if (key == -1){
-      break;
-    }
-    q.enqueue(key);
-  }
-  cout << "\nElements in the queue are : ";
-  q.display();
+  Tree t;
+  t.create();
+  cout << "\nPreorder traversal :\t";
+  t.preorder();
+  cout << "\nInorder traversal :\t";
+  t.inorder();
+  cout << "\nPostorder traversal:\t";
+  t.postorder();
+  cout << "\nHeight of the tree is :"<< t.height() ;
+  cout << "\nNumber of nodes are :"<< t.count() ;
+  cout << "\nLeaf node Counts are :"<< t.leaf_node();
+
+
 }
