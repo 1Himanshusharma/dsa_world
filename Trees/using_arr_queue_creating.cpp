@@ -115,6 +115,24 @@ void inorder(Node *p){
     y = count(p->rchild);
     return x + y + 1;
   }
+  int leaf_count(Node* p) {
+    // Base case: if the node is NULL, it contributes 0 to the leaf count
+    if (p == NULL) {
+        return 0;
+    }
+
+    // If the node is a leaf (both left and right children are NULL), return 1
+    if (p->lchild == NULL && p->rchild == NULL) {
+        return 1;
+    }
+
+    // Recursively count leaf nodes in the left and right subtrees
+    int left_count = leaf_count(p->lchild);
+    int right_count = leaf_count(p->rchild);
+
+    // Return the sum of leaf nodes in the left and right subtrees
+    return left_count + right_count;
+}
   public:
   Tree(){
     root = NULL;
@@ -187,6 +205,12 @@ void inorder(Node *p){
   int count(){
     return count(root);
   }
+  /// okay i want to count all the lead nodes
+  // actually leaf node doesnot have any child nodes
+  // mai janta hu ki tree me traversal me mujhe crecurrsion chaiye hoga
+  int leaf_count(){
+    return leaf_count(root);
+  }
 };
 
 int main(){
@@ -200,5 +224,7 @@ int main(){
   t.postorder();
   cout << endl << "Height of tree is :" << t.height() ;
   cout << endl << "Number of nodes are :" << t.count();
+  cout << endl << "Number of Leaf Nodes are :" << t.leaf_count();
+  
 
 }
