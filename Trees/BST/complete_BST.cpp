@@ -20,7 +20,7 @@ class LNode{
     this->data = key;
     this->next = NULL;
   }
-}
+};
 
 class Queue{
   private:
@@ -30,7 +30,7 @@ class Queue{
     front = rear = NULL;
   }
   void enqueue(int key){
-    LNode *new_node = LNode(key);
+    LNode *new_node = new LNode(key);
     if (new_node == NULL){
       cout << "Can't create buffer overflow.";
     }
@@ -51,12 +51,43 @@ class Queue{
       cout << "Queue is empty.";
     }
     else{
-      temp = front->data;
+      temp = front;
       front = front->next;
     }
     return temp;
   }
   bool isempty(){
-    if ()
+    if (front == NULL){
+      return NULL;
+    }
   }
+  bool isfull(){
+    LNode *new_node = new LNode(7);
+    if (new_node == NULL){
+      return true;
+    }
+    return false;
+  }
+  void display(){
+    LNode *temp = front;
+    while (temp){
+      cout << temp->data << " ";
+      temp = temp->next;
+    }
+  }
+};
+int main(){
+  cout << "Please enter the values and (enter -1 to stop): ";
+  Queue q;
+  while (true){
+    int key;
+    cin >> key;
+    if (key == -1){
+      break;
+    }
+    q.enqueue(key);
+  }
+  //display
+  cout << "The elements in queue are: \n";
+  q.display();
 }
