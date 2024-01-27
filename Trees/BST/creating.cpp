@@ -9,7 +9,7 @@ class Node{
   Node(int key){
     this->data = key;
     this->lchild = NULL;
-    this->rchild = NULL;
+    this->rchild = NULL; 
   }
 };
 
