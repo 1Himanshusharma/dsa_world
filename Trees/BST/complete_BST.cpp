@@ -201,6 +201,10 @@ class BST{
         // aab mene data ko tho replace kar diya 
         // oorr mujhe leaf node tak jana hai tho mai fhri ek baar fhir call karunga
         p->lchild = deleten(p->lchild,temp->data);
+        // mai uske left ko kyu delete kar rha hu 
+        // kyuki jab mene data copy kiya tha tab key value change ho gya tha jab jisse ke replace kiya ussi ke 2 same element hai
+        // that's why i need to check that same data node is present in left subtree 
+
       }
       else{
         Node *temp = insucc(p->rchild);
@@ -216,7 +220,11 @@ class BST{
 
   }
   // okay level order
-  void levelorder(){}
+  void levelorder(){
+    // for level simplly push the root node;
+    // and push that into queue
+    
+  }
 };
 
 
