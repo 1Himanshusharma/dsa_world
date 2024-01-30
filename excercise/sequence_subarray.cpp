@@ -10,15 +10,15 @@ void subarray(vector<int> arr, int index, int size, vector<int> temp) {
         cout << endl;
         return;
     }
-    temp.push_back(arr[index]);
+    
     // calling the funcaton parallel
     // using the for loop
     for (int i = index; i < size; i++) {
-        
-        subarray(arr, 1 + i, size, temp);
-    
-       
+      temp.push_back(arr[i]);
+      subarray(arr, 1 + i, size, temp);
+
     }
+    
 }
 
 int main() {
