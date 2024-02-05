@@ -6,6 +6,11 @@ class Node{
   int data;
   Node *rchild;
   Node *lchild;
+  Node(int key){
+    this->data = key;
+    this->lchild = NULL;
+    this->rchild = NULL;
+  }
 };
 class BT{
   private:
@@ -52,4 +57,42 @@ class BT{
   void inorder(){
     inorder(root);
   }
+  Node *get_root(){
+    return  root;
+  }
+};
+Node *LCA(Node *root,Node* p,Node* q){
+  if (root == NULL){
+    return NULL;
+  }
+  if (root == p){
+    return p;
+  }
+  if (root = q){
+    return q;
+  }
+  Node *left_ka_ans = LCA(root->lchild,p,q);
+  Node *right_ka_ans = LCA(root->rchild,p,q);
+  // now i got the answer but
+  // i need the print the node on which node return is not NULL
+  if (left_ka_ans == NULL && right_ka_ans == NULL){
+    return NULL;
+  }
+  else if (left_ka_ans == NULL && right_ka_ans != NULL){
+    return right_ka_ans;
+  }
+  else if (left_ka_ans != NULL && right_ka_ans == NULL){
+    return left_ka_ans;
+  }
+  else{
+    // ye wo wala node jha per return statement dono NULL nahi hai
+    return root;
+  }
+  
+}
+int main(){
+  BT t;
+  t.create();
+  cout << "The inorder: ";
+  t.inorder();
 }
