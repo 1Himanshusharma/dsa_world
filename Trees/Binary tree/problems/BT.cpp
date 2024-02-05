@@ -49,48 +49,59 @@ class BT{
     if (temp == NULL){
       return 0;
     }
-    // find the height of left and right subtree
-    int lHeight = height(temp -> lchild);
-    int rHeight = height(temp -> rchild);
-    // now calculate the diameter using the above two values.
-    int diam = lHeight + rHeight;
-    /* Now check which side is heavier,
-    then recur on that side */
-    diam = max(diam , max(diameter(temp->lchild) , diameter(temp->rchild)));
-    return diam;
+    // i have three option i wil checking one by one
+    int left_subtree_ka_result = diameter(temp->lchild);
+    int right_subtree_ka_result = diameter(temp->rchild);
+    // now i will calculate the height of tree
+    int left_wale_ki_height = height(temp->lchild);
+    int right_wale_ki_height = height(temp->rchild);
+    int current_node_ki_hight = left_wale_ki_height + right_wale_ki_height;
+    //   Now i will check which result is better to return
+    // i will check 3 of them condition whether which one of them give the maximum value;
+    return max(left_wale_ki_height,max(right_wale_ki_height,current_node_ki_hight));
+
   }
   
   public:
   BT(){
-    root == NULL;
+    root = NULL;
   }
-  void create(){
+  void create() {
     cout << "Please enter the root node: ";
     int root_ele;
     cin >> root_ele;
-    if (root == NULL){
-      root = new Node(root_ele);
+    
+    if (root == NULL) {
+        root = new Node(root_ele);
     }
+
     queue<Node *> q;
     q.push(root);
-    while (!q.empty()){
-      Node *node = q.front();
-      q.pop();
-      cout << "Please enter the value of  lchild: " << node->data;
-      int key;
-      cin >> key;
-      if (key != -1){
-        node->lchild = new Node(key);
-        q.push(node->lchild);
-      }
-      cout << "Please enter the value of rchild: "<< node->data;
-      cin >> key;
-      if (key != -1){
-        node->rchild = new Node(key);
-        q.push(node->rchild);
-      }
+
+    while (!q.empty()) {
+        Node *node = q.front();
+        q.pop();
+
+        int lchild_key, rchild_key;
+
+        cout << "Please enter the value of left child for " << node->data << ": ";
+        cin >> lchild_key;
+
+        if (lchild_key != -1) {
+            node->lchild = new Node(lchild_key);
+            q.push(node->lchild);
+        }
+
+        cout << "Please enter the value of right child for " << node->data << ": ";
+        cin >> rchild_key;
+
+        if (rchild_key != -1) {
+            node->rchild = new Node(rchild_key);
+            q.push(node->rchild);
+        }
     }
-  }
+}
+
   void inorder(){
     inorder(root);
   }
@@ -124,12 +135,15 @@ class BT{
     q.push(NULL);
     while (!q.empty()){
       Node *temp = q.front();
+      q.pop();
       if (temp == NULL){
         cout << endl;
-        q.push(NULL);
+        if (!q.empty()){
+          q.push(NULL);
+        }
       }
       else{
-      q.pop();
+      
       cout << temp->data << " ";
       if (temp->lchild != NULL){
         q.push(temp->lchild);
@@ -144,3 +158,32 @@ class BT{
     return diameter(root);
   }
 };
+int main() {
+    BT tree;
+    tree.create();
+
+    cout << "Inorder Traversal: ";
+    tree.inorder();
+    cout << endl;
+
+    cout << "Preorder Traversal: ";
+    tree.preorder();
+    cout << endl;
+
+    cout << "Postorder Traversal: ";
+    tree.postorder();
+    cout << endl;
+
+    cout << "Height of the tree: " << tree.height() << endl;
+
+    cout << "Diameter of the tree: " << tree.diameter() << endl;
+
+    cout << "Level Order Traversal: ";
+    tree.levelorder();
+    cout << endl;
+
+    cout << "Level Order Traversal II: " << endl;
+    tree.levelorderII();
+
+    return 0;
+}
