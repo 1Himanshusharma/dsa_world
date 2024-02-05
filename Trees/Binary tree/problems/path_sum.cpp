@@ -67,20 +67,25 @@ class BT{
     return root;
   }
 };
-void path_sum(Node *p,int target,int sum,vector<int> val){
-  if (target == sum){
-    for (int i = 0;i < val.size();i++){
-      cout << val[i] << " ";
+// there are few error try it on your own
+bool path_sum(Node * temp,int sum,int target){
+  // mujhe sum nikalna hai]
+  // to mai leaf node oer
+  if (temp == NULL){
+    return false;
+  }
+  sum += temp->data;
+  // i will reach at leaf node then i will check whather the sum is equal to target or not
+  if (root->lchild == NULL && root->rchild == NULL){
+    if (sum == target){
+      return true;
+    }
+    else{
+      return false;
     }
   }
-  if (!p){
-    return;
-  }
-  sum += p->data;
-  val.push_back(p->data);
-  path_sum(p->lchild,target,sum,val);
-  path_sum(p->rchild,target,sum,val);
-  
+  bool left_ka_answer = path_sum(root->lchild,sum,target);
+  bool right_ka_answer = path_sum(root->rchild,sum,target);
 }
 
 int main(){

@@ -44,6 +44,7 @@ class BT{
     int right_ki_height = height(p->rchild);
     return max(left_ki_height,right_ki_height)+1;
   }
+  
   int diameter(Node *temp){
     // okay look for base case
     if (temp == NULL){
