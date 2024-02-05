@@ -20,6 +20,8 @@ void subarray(vector<int> arr, int index, int size, vector<int> temp) {
     }
     
 }
+// back tarce karunga to mujhe pop method use karna padhega
+// okk
 
 int main() {
     int n;
