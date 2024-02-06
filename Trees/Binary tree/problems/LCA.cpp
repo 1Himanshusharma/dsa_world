@@ -61,38 +61,117 @@ class BT{
     return  root;
   }
 };
-Node *LCA(Node *root,Node* p,Node* q){
+Node *LCA(Node *root,int p,int q){
   if (root == NULL){
     return NULL;
   }
-  if (root == p){
-    return p;
-  }
-  if (root = q){
-    return q;
-  }
-  Node *left_ka_ans = LCA(root->lchild,p,q);
-  Node *right_ka_ans = LCA(root->rchild,p,q);
-  // now i got the answer but
-  // i need the print the node on which node return is not NULL
-  if (left_ka_ans == NULL && right_ka_ans == NULL){
-    return NULL;
-  }
-  else if (left_ka_ans == NULL && right_ka_ans != NULL){
-    return right_ka_ans;
-  }
-  else if (left_ka_ans != NULL && right_ka_ans == NULL){
-    return left_ka_ans;
-  }
-  else{
-    // ye wo wala node jha per return statement dono NULL nahi hai
+  if (root->data == p){
     return root;
   }
-  
+  if (root->data == q){
+    return root;
+  }
+  Node *left_ki_node = LCA(root->lchild,p,q);
+  Node *right_ki_node = LCA(root->rchild,p,q);
+  // aab mai check karunga ki on which path from both of side node in returning
+  if (left_ki_node== NULL && right_ki_node == NULL){
+    return NULL;
+  }
+  else if (left_ki_node == NULL  && right_ki_node != NULL){
+    return right_ki_node;
+  }
+  else if (left_ki_node != NULL && right_ki_node == NULL){
+    return left_ki_node;
+  }
+  else{
+    // returning the current node where left_ki_node and right_ki_node dono NULL nahi hai
+
+    return root;
+  }
+}
+// Node *kth_Ancestor(Node *root,int target,int& k){
+//   // base case kya hoga
+//   // jab root ki value NULL hai tab mai NULL return kar rha hu
+//   if (root == NULL){
+//     return NULL;
+//   }
+//   if (root->data == target){
+//     return  root;
+//   }
+//   if (k == 0){
+//     return root;
+//   }
+//   Node *left_ki_node = kth_Ancestor(root->lchild,target,k);
+//   Node *right_ki_node = kth_Ancestor(root->rchild,target,k);
+//   if (left_ki_node == NULL && left_ki_node == NULL){
+//     return NULL;
+//   }
+//   if (left_ki_node != NULL || right_ki_node != NULL){
+//     k--;
+//     return root;
+//   }
+//   else {
+//     return root;
+//   }
+// }
+// okay dobara karta hu
+// int kth_Ancestor(Node *root,int target,int& k){
+//   if  (root==NULL) return -1;
+//   if (root->data == target){
+//     return target;
+//   }
+//   if (k == 0){
+//     return root->data;
+//   }
+//   int left_ka_ans = kth_Ancestor(root->lchild,target,k);
+//   int right_ka_ans = kth_Ancestor(root->rchild,target,k);
+//   if (left_ka_ans == -1 && right_ka_ans == -1){
+//     return -1;
+//   }
+//   if (left_ka_ans!=-1){
+//     k=k-1;
+//     return left_ka_ans;
+//   }else{
+//     return right_ka_ans;
+//   }
+
+// }
+// okay i wil try one more
+// with basic approch
+bool kth_Ancestor(Node *temp,int target,int& k){
+  if (temp == NULL){
+    return false;
+  }
+  if (temp->data == target){
+    return true;
+  }
+  bool left_ka_ans = kth_Ancestor(temp->lchild,target,k);
+  bool right_ka_ans = kth_Ancestor(temp->rchild,target,k);
+  if (k == 0){
+    cout << temp->data << endl;
+    return true;
+  }
+  if (left_ka_ans || right_ka_ans){
+    k--;
+    return true;
+  }
+  return false;
 }
 int main(){
   BT t;
   t.create();
   cout << "The inorder: ";
   t.inorder();
+  int p=40, q=90;
+  Node *root = t.get_root();
+  cout<<"The LCA of nodes with data "<<p<<" and "<<q;
+  Node *ans = LCA(root,p,q);
+  cout<<" is : "<<ans->data<<endl;
+
+  int k;
+  cout << "Please enter the kth value to find  kth ancestor: ";
+  cin >> k;
+  bool k_node = kth_Ancestor(root,80,k);
+  cout << "\nKth Ancestor of node with data 80 is : "<<k_node<<endl;
+
 }
