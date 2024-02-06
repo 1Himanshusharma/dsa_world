@@ -1,6 +1,6 @@
 #include<iostream>
-#include<queue>
 using namespace std;
+#include<queue>
 class Node{
   public:
   int data;
@@ -20,55 +20,61 @@ class BT{
     root = NULL;
   }
   void create(){
-    queue<Node *> q;
     cout << "Please enter the root element value: ";
     int root_ele;
     cin >> root_ele;
+    queue<Node *> q;
     if (root == NULL){
       root = new Node(root_ele);
     }
     q.push(root);
     while (!q.empty()){
-      Node *current_node =  q.front();
+      Node *current_node = q.front();
       q.pop();
+      cout << "Enter the lchild of " << current_node->data << " : ";
       int key;
-      cout << "Enter the value of left child: " << current_node->data << " : ";
       cin >> key;
       if (key != -1){
         current_node->lchild = new Node(key);
         q.push(current_node->lchild);
       }
-      cout << "Enter the value of right child: " << current_node->data << " : ";
+      cout << "Enter the rchild of " << current_node->data << " : ";
       cin >> key;
       if (key != -1){
         current_node->rchild = new Node(key);
         q.push(current_node->rchild);
       }
+    
     }
   }
- void levelorder() {
+  void levelorder(){
     queue<Node *> q;
     q.push(root);
-    
-    while (!q.empty()) {
-        Node *current_node = q.front();
-        q.pop();
+    q.push(NULL);
+    while (!q.empty()){
+      Node *current_node = q.front();
+      q.pop();
+      if (current_node == NULL){
+        cout << endl;
+        if (!q.empty()){
+          q.push(NULL);
+        }
+      }
+      else{
         cout << current_node->data << " ";
-
-        if (current_node->lchild != NULL) {
-            q.push(current_node->lchild);
+        if (current_node->lchild != NULL){
+          q.push(current_node->lchild);
         }
-        if (current_node->rchild != NULL) {
-            q.push(current_node->rchild);
+        if (current_node->rchild != NULL){
+          q.push(current_node->rchild);
         }
+      }
     }
-}
-
+  }
 };
 int main(){
   BT t;
   t.create();
-  cout << "The levelroder traversal";
+  cout << "The levelorder: ";
   t.levelorder();
-
 }
