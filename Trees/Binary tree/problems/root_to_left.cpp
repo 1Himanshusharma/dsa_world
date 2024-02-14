@@ -34,6 +34,20 @@ class BT{
     solve(p->lchild,val);
     solve(p->rchild,val);
   }
+  void path_sum(Node *root,int sumi,int final_sum){
+    if (root == NULL){
+        return;
+    }
+    
+    sumi = sumi * 10 + root->data;
+    if (root->lchild == NULL && root->rchild == NULL){
+      cout << sumi << endl;
+        final_sum += sumi;
+        return;
+    }
+    path_sum(root->lchild,sumi,final_sum);
+    path_sum(root->rchild,sumi,final_sum);
+}
   public:
   BT(){
     root = NULL;
@@ -68,11 +82,17 @@ class BT{
     vector<int> val;
     solve(root,val);
   }
+  void path_sum(){
+    int final_sum = 0;
+    path_sum(root,0,final_sum);
+    cout << "The final_sum: " << final_sum;
+  }
 };
 int main(){
   BT t;
   t.create();
   cout << "root_ to _leaf: ";
-  t.solve();
+  t.path_sum();
+
 
 }
