@@ -44,8 +44,9 @@ Node *BuildTree(vector<int> postorder,vector<int> inorder,int postorderindex,int
     // create root node
     Node *root = new Node(element);
     // i have created the root ndoe'
-    root->rchild = BuildTree(postorder,inorder,postorderindex,inorder_start,inorder_me_element_postion-1,size);
-    root->lchild = BuildTree(postorder,inorder,postorderindex,inorder_me_element_postion+1,inorder_end,size);
+    root->rchild = BuildTree(postorder,inorder,postorderindex,inorder_me_element_postion+1,inorder_end,size);
+   
+    root->lchild =  BuildTree(postorder,inorder,postorderindex,inorder_start,inorder_me_element_postion-1,size);
     // i have attached the lchild and rchild of node
     return root;
 }
