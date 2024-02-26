@@ -51,34 +51,36 @@ class BST{
     }
     return node;
   }
-  Node *del(Node *temp,int key){
-    if (temp == NULL){
-      if (temp == root){
+  Node *del(Node *node,int key){
+    if (node == NULL){
+      if (node == root){
         root = NULL;
       }
       return NULL;
     }
-    if (temp->left== NULL && temp->right == NULL){
-      delete temp;
+    if (node->left == NULL && node->right == NULL){
+      delete node;
+      return NULL;
     }
-    if (temp->data > key){
-      temp->left  = del(temp->left,key);
+    if (node->data < key){
+      node->left = del(node->left,key);
     }
-    else if (temp->data < key){
-      temp->right = del(temp->right,key);
-    }else{
-      if (height(temp->left) < height(tmemp->right)){
-        Node *predeccesor = pred(temp->left);
-        temp->data = predeccesor->data;
-        temp->left = del(temp->left,predeccesor->data);
+    else if (node->data > key){
+      node->right = del(node->right,key);
+    }
+    else{
+      if (height(node->left) < height(node->right)){
+        Node *pre = pred(node->left);
+        node->data = pre->data;
+        node->left = del(node->left,pre->data);
       }
       else{
-        Node *successor  = succ(temp->right)
-        temp->data = successor->data;
-        temp->right = del(temp->right,successor->data);
+        Node *sucd = succ(node->right);
+        node->data = sucd->data;
+        node->right = del(node->right,sucd->data);
       }
-    }
-    return temp;
 
+    }
+    return node;
   }
 }
